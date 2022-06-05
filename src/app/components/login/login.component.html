@@ -1,4 +1,8 @@
 <div class="col-md-6 offset-md-3 mt-5">
+    <div class="alert-alert-info">
+        Usuario: eve.holt@reqres.in<br/>
+        Contraseña:cityslicka
+    </div>
     <form [formGroup]="this.loginForm" (ngSubmit)="submitForm()">
         <div class="form-group">
           <label for="exampleInputEmail1">Email usuario</label>
@@ -27,10 +31,13 @@
             'is-invalid':this.enviado && this.loginForm.controls.password.errors
         }"
           placeholder="Contraseña">
-          <div class="invalid-feedback" *ngIf="enviado && this.loginForm.controls.password.errors?.required">Esto no es un email</div>
+          <div class="invalid-feedback" *ngIf="enviado && this.loginForm.controls.password.errors?.required">Tienes que rellenar este campo</div>
 
         </div>
-        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+        <button [disabled]="isLoading" type="submit" class="btn btn-primary">
+            <span class="spinner-border spinner-border-sm mr-1" *ngIf="isLoading"></span>
+            Iniciar sesión</button>
+        <div *ngIf="errorMsg" class="alert-alert-danger mt-3 mb-8">{{errorMsg}}</div>
       </form>
 </div>
 <pre>

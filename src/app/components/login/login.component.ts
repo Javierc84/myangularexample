@@ -12,6 +12,8 @@ export class LoginComponent implements OnInit {
 
   loginForm: FormGroup;
   enviado:boolean = false;
+  errorMsg!:string | null;
+  isLoading:boolean = false;
 
   constructor(private formBuilder:FormBuilder,
               private loginService:LoginService) { 
@@ -26,18 +28,30 @@ export class LoginComponent implements OnInit {
 
   submitForm(){
     this.enviado = true;
+
     if(!this.loginForm.valid)
     return;
 
+    let loginModel = new LoginModel(this.loginForm.controls.username.value,
+      this.loginForm.controls.password.value,'');
+      
+    this.isLoading = true;
+
     this.loginService
-    .performLogin(new LoginModel(this.loginForm.controls.username.value,
-      this.loginForm.controls.password.value,''))
+    .performLogin(loginModel)
     .subscribe(respuesta=>{
       console.log(JSON.stringify(respuesta));
+      this.isLoading = false;
+      
     },
-    error =>{
+    error => {
       console.log('ERROR:' + JSON.stringify(error));
-    })
+      this.errorMsg = `No se ha podido iniciar sesion (${error.error?.error})`;
+      this.isLoading = false;
+    },
+    ()=>{
+      this.isLoading = false;
+    });
   }
 
 }
