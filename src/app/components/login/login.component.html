@@ -1,0 +1,37 @@
+<div class="col-md-6 offset-md-3 mt-5">
+    <form [formGroup]="this.loginForm">
+        <div class="form-group">
+          <label for="exampleInputEmail1">Email usuario</label>
+          <input type="email"
+          formControlName="username"
+          class="form-control is-invalid" 
+          id="exampleInputEmail1" 
+          aria-describedby="emailHelp"
+          [ngClass]="{
+              'is-invalid':this.loginForm.controls.username.errors
+          }"
+          placeholder="Introduce tu email">
+          <small id="emailHelp" class="form-text text-muted">Nunca compartas la contraseña con nadie</small>
+          <div class="invalid-feedback" *ngIf="this.loginForm.controls.username.errors?.required">Tienes que rellenar este campo</div>
+          <div class="invalid-feedback" *ngIf="this.loginForm.controls.username.errors?.required">Esto no es un email</div>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Introduce tu Contraseña</label>
+          <input type="password" 
+          class="form-control" 
+          id="exampleInputPassword1"
+          formControlName="password"
+          [ngClass]="{
+            'is-invalid':this.loginForm.controls.password.errors
+        }"
+          placeholder="Contraseña">
+          <div class="invalid-feedback" *ngIf="this.loginForm.controls.password.errors?.required">Esto no es un email</div>
+
+        </div>
+        <button type="submit" class="btn btn-primary">Iniciar sesión</button>
+      </form>
+</div>
+<pre>
+    {{this.loginForm.controls | json}}
+
+</pre>
